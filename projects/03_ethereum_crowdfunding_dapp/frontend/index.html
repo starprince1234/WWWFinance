@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EtherCrowd - 以太坊去中心化众筹 DAPP</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo">
+            <i class="fab fa-ethereum logo-icon"></i>
+            <span>EtherCrowd <span>DAPP</span></span>
+        </div>
+        <div class="nav-right">
+            <button id="btn-launch-modal" class="btn btn-outline"><i class="fas fa-plus"></i> 发起新众筹</button>
+            <div class="wallet-badge" id="wallet-info">
+                <span class="wallet-dot"></span>
+                <span id="wallet-addr">未连接钱包</span>
+                <span class="badge-bal" id="wallet-bal">0.00 ETH</span>
+            </div>
+            <button id="btn-connect" class="btn btn-primary"><i class="fas fa-wallet"></i> 连接 MetaMask</button>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- 统计面板 -->
+        <section class="hero-stats">
+            <div class="stat-card">
+                <div class="stat-num" id="stat-total-campaigns">3</div>
+                <div class="stat-label">已发起众筹</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-num" id="stat-total-eth">48.5 ETH</div>
+                <div class="stat-label">累计锁定资金</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-num" id="stat-success-rate">100%</div>
+                <div class="stat-label">智能合约安全审计</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-num">DAO</div>
+                <div class="stat-label">里程碑治理防跑路</div>
+            </div>
+        </section>
+
+        <!-- 众筹列表区域 -->
+        <section class="campaign-section">
+            <div class="section-header">
+                <h2><i class="fas fa-fire text-primary"></i> 探索热门众筹项目</h2>
+                <div class="filter-tabs">
+                    <button class="tab active" data-filter="all">全部项目</button>
+                    <button class="tab" data-filter="active">进行中</button>
+                    <button class="tab" data-filter="ended">已结束</button>
+                </div>
+            </div>
+
+            <div class="campaign-grid" id="campaign-list">
+                <!-- 项目卡片由 app.js 动态渲染 -->
+            </div>
+        </section>
+    </main>
+
+    <!-- 发起众筹弹窗 -->
+    <div class="modal-overlay" id="launch-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3><i class="fas fa-rocket"></i> 发起去中心化众筹</h3>
+                <button class="btn-close" id="btn-close-modal">&times;</button>
+            </div>
+            <form id="form-launch">
+                <div class="form-group">
+                    <label>项目名称</label>
+                    <input type="text" id="input-title" placeholder="例如：开源区块链隐私硬件钱包" required>
+                </div>
+                <div class="form-group">
+                    <label>目标筹资金额 (ETH)</label>
+                    <input type="number" id="input-goal" step="0.1" min="0.1" placeholder="10.0" required>
+                </div>
+                <div class="form-group">
+                    <label>众筹周期 (天)</label>
+                    <input type="number" id="input-days" min="1" max="90" value="14" required>
+                </div>
+                <div class="form-group">
+                    <label>项目愿景与用款规划</label>
+                    <textarea id="input-desc" rows="4" placeholder="详细阐述项目交付物、技术路线与团队背景..." required></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" id="btn-cancel-launch">取消</button>
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-check"></i> 签署智能合约上链</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 里程碑治理弹窗 -->
+    <div class="modal-overlay" id="milestone-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3><i class="fas fa-vote-yea"></i> 里程碑 DAO 拨款治理面板</h3>
+                <button class="btn-close" id="btn-close-milestone">&times;</button>
+            </div>
+            <div id="milestone-content">
+                <!-- 动态填充 -->
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>四川大学《互联网金融》课程设计实践 · 以太坊智能合约 DAPP · 基于 Solidity 0.8.20 + Ethers.js 构建</p>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>

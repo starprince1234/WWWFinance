@@ -36,7 +36,8 @@ Internet finance refers to the new business model of utilizing the Internet and 
 | :---: | :--- | :---: | :--- | :--- | :---: |
 | **01** | **比特币的原始代码实践** | `#IKSCT7` | [`01_bitcoin_original_code`](./projects/01_bitcoin_original_code/) | v0.1源码复现引擎 + 创世区块验证 + 深度技术报告 | **[已完成 √]** |
 | **02** | **比特币模拟器 (实践)** | `#IAU35E` | [`02_bitcoin_simulator`](./projects/02_bitcoin_simulator/) | 多节点 P2P 仿真器 + PoW 共识 + 交易池与分叉解决 | **[已完成 √]** |
-| **03** | **以太坊的众筹 DAPP** | `#IKSCC2` | `03_ethereum_crowdfunding_dapp` | Solidity 众筹合约 + 资金里程碑退款机制 + 前端交互 | `[进行中]` |
+| **03** | **以太坊的众筹 DAPP** | `#IKSCC2` | [`03_ethereum_crowdfunding_dapp`](./projects/03_ethereum_crowdfunding_dapp/) | Solidity 众筹合约 + 资金里程碑退款机制 + 前端交互 | **[已完成 √]** |
+| **04** | **开发众筹平台 (工作量大)** | `#IKSC4Z` | `04_crowdfunding_platform` | FastAPI + 前端 Web 平台 + 项目发起与出资支持闭环 | `[进行中]` |
 | **04** | **开发众筹平台 (工作量大)** | `#IKSC4Z` | `04_crowdfunding_platform` | FastAPI + 前端 Web 平台 + 项目发起与出资支持闭环 | `[待开始]` |
 | **05** | **众筹书籍的数据分析** | `#IKSANG` | `05_crowdfunding_books_analysis` | 出版众筹数据集 + NLP文案分析 + 成功率影响回归模型 | `[待开始]` |
 | **06** | **众筹 Kickstarter Indiegogo 摩点** | `#IASP1B` | `06_crowdfunding_cross_platform` | 中美主流众筹平台对比 + 多维指标清洗与可视化研报 | `[待开始]` |
