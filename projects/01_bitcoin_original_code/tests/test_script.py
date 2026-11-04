@@ -68,3 +68,4 @@ def test_p2pkh_script():
 if __name__ == '__main__':
     test_arithmetic_script()
     test_p2pkh_script()
+

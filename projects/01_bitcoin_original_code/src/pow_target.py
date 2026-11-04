@@ -125,3 +125,4 @@ def mine_block(header_prefix_bytes: bytes, nbits: int, start_nonce: int = 0, max
         tries += 1
 
     return False, nonce, b'', tries
+

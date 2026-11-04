@@ -295,3 +295,4 @@ class ScriptEngine:
                     self._log(f"未支持的操作码: {hex(op)}")
                     return False
         return True
+

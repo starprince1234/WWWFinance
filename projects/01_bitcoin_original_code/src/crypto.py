@@ -182,3 +182,4 @@ def decode_der(der_bytes: bytes) -> (int, int):
     s_len = der_bytes[idx + 1]
     s = int.from_bytes(der_bytes[idx + 2 : idx + 2 + s_len], 'big')
     return (r, s)
+

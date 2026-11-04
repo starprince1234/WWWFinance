@@ -61,3 +61,4 @@ class IRCServerMock:
                 if decoded_ip:
                     peers.append(decoded_ip)
         return peers
+

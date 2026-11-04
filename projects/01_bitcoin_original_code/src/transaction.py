@@ -140,3 +140,4 @@ def parse_script_tokens(script_bytes: bytes) -> List[Any]:
             tokens.append(op)
             i += 1
     return tokens
+

@@ -144,3 +144,4 @@ def verify_genesis_block() -> Dict[str, Any]:
         "golden_nonce": GENESIS_NONCE,
         "headline": GENESIS_COINBASE_MESSAGE.decode('ascii')
     }
+
