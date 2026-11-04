@@ -39,7 +39,7 @@ Internet finance refers to the new business model of utilizing the Internet and 
 | **03** | **以太坊的众筹 DAPP** | `#IKSCC2` | [`03_ethereum_crowdfunding_dapp`](./projects/03_ethereum_crowdfunding_dapp/) | Solidity 众筹合约 + 资金里程碑退款机制 + 前端交互 | **[已完成 √]** |
 | **04** | **开发众筹平台 (工作量大)** | `#IKSC4Z` | [`04_crowdfunding_platform`](./projects/04_crowdfunding_platform/) | 关系型数据库ACID + 清结算退款引擎 + 全栈SPA | **[已完成 √]** |
 | **05** | **众筹书籍的数据分析** | `#IKSANG` | [`05_crowdfunding_books_analysis`](./projects/05_crowdfunding_books_analysis/) | 600样本大数据管道 + NLP文本情感 + Logit/OLS计量模型 | **[已完成 √]** |
-| **06** | **众筹 Kickstarter Indiegogo 摩点** | `#IASP1B` | `06_crowdfunding_cross_platform` | 中美主流众筹平台对比 + 多维指标清洗与可视化研报 | `[进行中]` |
-| **07** | **股权式众筹及数据分析** | `#I8K09K` | `07_equity_crowdfunding_analysis` | 国内外股权众筹制度变迁 + 收益风险特征与存活率实证 | `[待开始]` |
+| **06** | **众筹 Kickstarter Indiegogo 摩点** | `#IASP1B` | [`06_crowdfunding_cross_platform`](./projects/06_crowdfunding_cross_platform/) | 750跨平台样本 + 制度博弈对比 + 支付基建摩擦研报 | **[已完成 √]** |
+| **07** | **股权式众筹及数据分析** | `#I8K09K` | `07_equity_crowdfunding_analysis` | 国内外股权众筹制度变迁 + 收益风险特征与存活率实证 | `[进行中]` |
 | **08** | **众筹叙事的专业合规性 (难)** | `#IKSBTX` | `08_crowdfunding_compliance` | 非法集资/公募证券司法边界 + 项目文案合规审查指南 | `[待开始]` |
 

@@ -1,0 +1,46 @@
+{
+  "platform_summary": {
+    "Kickstarter": {
+      "sample_size": 250,
+      "success_rate_pct": 42.8,
+      "avg_goal_usd": 26810.0,
+      "avg_pledged_usd": 55161.9,
+      "avg_backers": 484.2,
+      "avg_ticket_usd": 121.93,
+      "top_category": "Tech/Hardware (42.8%)",
+      "fee_structure": "平台 5% + 通道 3.0% = 综合摩擦 8.0%"
+    },
+    "Indiegogo": {
+      "sample_size": 250,
+      "success_rate_pct": 35.2,
+      "avg_goal_usd": 33526.0,
+      "avg_pledged_usd": 54816.75,
+      "avg_backers": 371.4,
+      "avg_ticket_usd": 161.99,
+      "top_category": "Tech/Hardware (54.4%)",
+      "fee_structure": "平台 5% + 通道 3.0% = 综合摩擦 8.0%"
+    },
+    "Modian": {
+      "sample_size": 250,
+      "success_rate_pct": 60.0,
+      "avg_goal_usd": 4336.67,
+      "avg_pledged_usd": 9697.74,
+      "avg_backers": 276.6,
+      "avg_ticket_usd": 39.66,
+      "top_category": "Games/Tabletop (45.6%)",
+      "fee_structure": "平台 5% + 通道 1.0% = 综合摩擦 6.0%"
+    }
+  },
+  "mechanism_comparison": {
+    "Fixed_Funding_All_or_Nothing": {
+      "count": 582,
+      "success_rate_pct": 49.83,
+      "avg_backers": 392.7
+    },
+    "Flexible_Funding_Keep_it_All": {
+      "count": 168,
+      "success_rate_pct": 32.74,
+      "avg_backers": 324.5
+    }
+  }
+}
