@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>创益众筹 - 全栈互联网众筹与创新孵化平台</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo">
+            <i class="fas fa-hand-holding-heart logo-icon"></i>
+            <span>创益众筹 <span>CloudFund</span></span>
+        </div>
+        <div class="nav-right" id="nav-user-panel">
+            <button id="btn-open-create" class="btn btn-outline"><i class="fas fa-plus"></i> 发起项目</button>
+            <div id="auth-buttons">
+                <button class="btn btn-primary" id="btn-open-login"><i class="fas fa-user"></i> 登录 / 注册</button>
+            </div>
+            <div id="user-info-badge" class="user-badge" style="display: none;">
+                <span class="user-avatar" id="avatar-initial">U</span>
+                <span id="user-display-name">用户名</span>
+                <span class="badge-balance">¥<span id="user-balance-val">0.00</span></span>
+                <button class="btn btn-text" id="btn-logout" title="退出登录"><i class="fas fa-sign-out-alt"></i></button>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- 核心统计大屏 -->
+        <section class="dashboard-banner">
+            <div class="banner-content">
+                <h1>让创新被看见，让梦想获得共鸣</h1>
+                <p>基于完整双向清结算体系的互联网众筹平台，支持 All-or-Nothing 履约保障与资金安全托管</p>
+            </div>
+            <div class="stats-row">
+                <div class="stat-item">
+                    <div class="stat-value" id="stat-total-campaigns">0</div>
+                    <div class="stat-title">在研众筹项目</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">¥<span id="stat-total-funded">0</span></div>
+                    <div class="stat-title">已筹集创新资金</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">100%</div>
+                    <div class="stat-title">未达标自动退款率</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 筛选栏 -->
+        <section class="filters-bar">
+            <div class="category-tabs">
+                <button class="cat-btn active" data-cat="ALL">全部领域</button>
+                <button class="cat-btn" data-cat="TECH">硬核科技</button>
+                <button class="cat-btn" data-cat="PUBLISHING">文化出版</button>
+                <button class="cat-btn" data-cat="CREATIVE">创意设计</button>
+            </div>
+            <div class="status-filters">
+                <select id="select-status">
+                    <option value="ALL">全部状态</option>
+                    <option value="ACTIVE" selected>筹集中</option>
+                    <option value="SUCCEEDED">已成功</option>
+                    <option value="FAILED">已流标退款</option>
+                </select>
+            </div>
+        </section>
+
+        <!-- 众筹项目瀑布流网格 -->
+        <section class="campaign-grid" id="campaigns-container">
+            <!-- 动态生成 -->
+        </section>
+    </main>
+
+    <!-- 登录注册模态窗 -->
+    <div class="modal-overlay" id="auth-modal">
+        <div class="modal modal-sm">
+            <div class="modal-header">
+                <h3 id="auth-title">登录创益账户</h3>
+                <button class="btn-close" id="btn-close-auth">&times;</button>
+            </div>
+            <form id="form-auth">
+                <div class="form-group">
+                    <label>用户名</label>
+                    <input type="text" id="auth-username" required placeholder="如: backer_alice">
+                </div>
+                <div class="form-group">
+                    <label>登录密码</label>
+                    <input type="password" id="auth-password" required placeholder="默认测试密码: 123456">
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" id="btn-toggle-auth-mode">切换到快速注册</button>
+                    <button type="submit" class="btn btn-primary" id="btn-auth-submit">确认登录</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 发起众筹模态窗 -->
+    <div class="modal-overlay" id="create-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3><i class="fas fa-edit"></i> 发起新众筹项目</h3>
+                <button class="btn-close" id="btn-close-create">&times;</button>
+            </div>
+            <form id="form-create">
+                <div class="form-group">
+                    <label>项目名称</label>
+                    <input type="text" id="create-title" required placeholder="输入引人注目的项目标题">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>领域分类</label>
+                        <select id="create-category">
+                            <option value="TECH">硬核科技</option>
+                            <option value="PUBLISHING">文化出版</option>
+                            <option value="CREATIVE">创意设计</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>筹资目标金额 (元)</label>
+                        <input type="number" id="create-goal" min="100" step="100" required placeholder="20000">
+                    </div>
+                    <div class="form-group">
+                        <label>众筹周期 (天)</label>
+                        <input type="number" id="create-days" min="1" max="90" value="30" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>项目亮点与回报方案阐述</label>
+                    <textarea id="create-desc" rows="4" required placeholder="描述团队实力、技术研发进展与预期交付产品..."></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" id="btn-cancel-create">取消</button>
+                    <button type="submit" class="btn btn-primary">立即创建并上线</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 项目详情与支持模态窗 -->
+    <div class="modal-overlay" id="detail-modal">
+        <div class="modal modal-lg">
+            <div class="modal-header">
+                <h3 id="detail-title">项目详情</h3>
+                <button class="btn-close" id="btn-close-detail">&times;</button>
+            </div>
+            <div id="detail-body">
+                <!-- 动态填充 -->
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>四川大学《互联网金融》课程设计 · 课题04：开发众筹平台（工作量大） · RESTful API + SQLite ACID 事务架构</p>
+    </footer>
+
+    <script src="main.js"></script>
+</body>
+</html>
