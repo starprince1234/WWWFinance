@@ -91,3 +91,4 @@ def run_descriptive_analysis(records: List[Dict[str, Any]]) -> Dict[str, Any]:
         "genre_breakdown": genre_summary,
         "group_contrast": group_contrast
     }
+

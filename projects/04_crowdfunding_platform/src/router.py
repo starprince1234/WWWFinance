@@ -126,3 +126,4 @@ class ApiRouter:
                 return 400, {"error": f"清算执行失败: {e}"}
 
         return 404, {"error": f"API 路由不存在: {method} {path}"}
+

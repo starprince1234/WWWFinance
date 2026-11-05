@@ -105,3 +105,4 @@ class CrowdfundingComplianceAuditor:
             "violations": violations,
             "summary": summary_msg
         }
+

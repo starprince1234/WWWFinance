@@ -119,3 +119,4 @@ def generate_book_crowdfunding_data(n_samples: int = 600, random_seed: int = 42)
 if __name__ == '__main__':
     path = generate_book_crowdfunding_data()
     print(f">>> 众筹书籍实证数据集已生成: {path}")
+

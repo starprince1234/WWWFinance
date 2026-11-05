@@ -183,3 +183,4 @@ class Node:
                 peer.receive_block(block, broadcast=True)
 
         return True
+

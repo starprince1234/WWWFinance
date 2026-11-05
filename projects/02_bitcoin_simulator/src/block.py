@@ -97,3 +97,4 @@ class Block:
             "tx_count": len(self.transactions),
             "timestamp": self.timestamp
         }
+

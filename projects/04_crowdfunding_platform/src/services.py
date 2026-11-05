@@ -230,3 +230,4 @@ class CrowdfundService:
             return {"success": False, "error": f"清算异常: {e}"}
         finally:
             conn.close()
+

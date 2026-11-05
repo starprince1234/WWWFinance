@@ -50,3 +50,4 @@ def test_illegal_fundraising_campaign():
 if __name__ == '__main__':
     test_compliant_campaign()
     test_illegal_fundraising_campaign()
+

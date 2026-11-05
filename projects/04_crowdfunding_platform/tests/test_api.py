@@ -102,3 +102,4 @@ def test_full_crowdfunding_lifecycle():
 
 if __name__ == '__main__':
     test_full_crowdfunding_lifecycle()
+

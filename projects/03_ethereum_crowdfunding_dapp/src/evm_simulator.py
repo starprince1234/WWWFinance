@@ -238,3 +238,4 @@ class DecentralizedCrowdfundSimulator:
             "amount_eth": m["amount"] / WEI_PER_ETH,
             "recipient": recipient_account.address
         })
+

@@ -53,3 +53,4 @@ python3 projects/07_equity_crowdfunding_analysis/tests/run_equity_analysis.py
 ## 四、 技术报告
 
 完整学术实证研报见配套文档：[期末技术报告：股权众筹投后生存率、幂律回报特征与投资者保护机制研究 (report.md)](./report.md)。
+

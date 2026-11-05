@@ -77,3 +77,4 @@ python3 projects/02_bitcoin_simulator/tests/test_double_spend.py
 ## 四、 技术报告
 
 完整学术报告与机制建模见配套文档：[期末技术报告：比特币分布式网络模拟与最长链共识实证 (report.md)](./report.md)。
+

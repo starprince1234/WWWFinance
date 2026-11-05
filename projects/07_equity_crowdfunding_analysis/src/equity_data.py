@@ -111,3 +111,4 @@ def generate_equity_crowdfunding_data(n_samples: int = 500, seed: int = 42) -> s
 if __name__ == '__main__':
     p = generate_equity_crowdfunding_data()
     print(f">>> 股权众筹实证数据集生成完毕: {p}")
+

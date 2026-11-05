@@ -235,3 +235,4 @@ contract DecentralizedCrowdfund {
         emit MilestoneExecuted(_campaignId, _milestoneId, m.amount, m.recipient);
     }
 }
+

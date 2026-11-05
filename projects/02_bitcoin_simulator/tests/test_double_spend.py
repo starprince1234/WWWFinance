@@ -54,3 +54,4 @@ def test_51_percent_double_spend_attack():
 if __name__ == '__main__':
     test_mempool_double_spend_prevention()
     test_51_percent_double_spend_attack()
+

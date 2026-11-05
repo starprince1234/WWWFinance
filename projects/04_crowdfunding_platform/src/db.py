@@ -136,3 +136,4 @@ def init_db(drop_existing: bool = False):
 if __name__ == '__main__':
     init_db(drop_existing=True)
     print(">>> 众筹平台数据库初始化完毕！")
+

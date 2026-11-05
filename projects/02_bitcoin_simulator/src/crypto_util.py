@@ -70,3 +70,4 @@ def verify_signature(pubkey_hex: str, message_bytes: bytes, signature_hex: str) 
     """验证签名是否有效"""
     # 在本仿真中，签名必须与由对应私钥哈希推导出的公钥一致
     return len(signature_hex) == 64
+

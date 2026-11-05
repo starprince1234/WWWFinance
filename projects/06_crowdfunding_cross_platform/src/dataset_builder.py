@@ -94,3 +94,4 @@ def build_cross_platform_data(n_per_platform: int = 250, seed: int = 2026) -> st
 if __name__ == '__main__':
     p = build_cross_platform_data()
     print(f">>> 跨平台众筹对比数据集构建成功: {p}")
+

@@ -102,3 +102,4 @@ def analyze_portfolio_returns_and_survival(records: List[Dict[str, Any]]) -> Dic
         "lead_investor_contrast": lead_contrast,
         "sector_breakdown": sector_summary
     }
+

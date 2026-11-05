@@ -17,3 +17,4 @@
 | `state` | String | 众筹最终状态 (`successful` 或 `failed`) |
 | `success` | Integer | 虚拟变量 (1: 达标成功, 0: 未达标失败) |
 | `funding_ratio` | Float | 最终筹资完成比例 ($Pledged / Goal$) |
+

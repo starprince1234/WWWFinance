@@ -152,3 +152,4 @@ def run_econometric_models(records: List[Dict[str, Any]]) -> Dict[str, Any]:
         "ols_r_squared": r2,
         "parameters": model_summary
     }
+
