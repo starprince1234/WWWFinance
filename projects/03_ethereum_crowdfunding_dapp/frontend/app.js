@@ -1,4 +1,4 @@
-// EtherCrowd DAPP 客户端交互逻辑 (Dual-Mode: 真实 Web3 / 离线模拟器)
+// EtherCrowd DAPP 客户端交互逻辑 (明确标注: 沙盒演示模式 vs 真实 Web3 模式)
 
 const INITIAL_CAMPAIGNS = [
     {
@@ -11,8 +11,8 @@ const INITIAL_CAMPAIGNS = [
         endAt: Date.now() + 86400000 * 5,
         status: "active",
         milestones: [
-            { id: 1, desc: "采购第1批磷酸铁锂电池电芯", amount: 10.0, votes: 18.0, executed: true },
-            { id: 2, desc: "并网智能逆变器硬件调试与部署", amount: 8.0, votes: 14.5, executed: false }
+            { id: 1, desc: "采购第1批磷酸铁锂电池电芯", amount: 10.0, votes: 18.0, executed: true, voters: [] },
+            { id: 2, desc: "并网智能逆变器硬件调试与部署", amount: 8.0, votes: 14.5, executed: false, voters: [] }
         ]
     },
     {
@@ -25,7 +25,7 @@ const INITIAL_CAMPAIGNS = [
         endAt: Date.now() + 86400000 * 12,
         status: "active",
         milestones: [
-            { id: 1, desc: "开模打样与PCB第一版试产", amount: 5.0, votes: 4.2, executed: false }
+            { id: 1, desc: "开模打样与PCB第一版试产", amount: 5.0, votes: 4.2, executed: false, voters: [] }
         ]
     },
     {
@@ -33,31 +33,44 @@ const INITIAL_CAMPAIGNS = [
         title: "开源零知识证明 (ZKP) 教学引擎",
         description: "为高校学生与金融研究员打造交互式 zk-SNARKs 可视化模拟教学系统，零门槛学习密码学黑科技。",
         goal: 8.0,
-        totalPledged: 8.0,
+        totalPledged: 4.0, // 未达标项目
         creator: "0x98A...55B2",
-        endAt: Date.now() - 86400000 * 2,
+        endAt: Date.now() - 86400000 * 2, // 已到期流标
         status: "ended",
         milestones: [
-            { id: 1, desc: "编写全部 12 讲交互式教程源码", amount: 4.0, votes: 8.0, executed: true },
-            { id: 2, desc: "部署上线公共开放实验室", amount: 4.0, votes: 8.0, executed: true }
+            { id: 1, desc: "编写全部 12 讲交互式教程源码", amount: 4.0, votes: 4.0, executed: false, voters: [] }
         ]
     }
 ];
 
 let state = {
-    account: "0x7856...A3F9",
-    balance: 85.50,
+    account: "0x7856...A3F9 (本地测试地址)",
+    balance: 50.00,
+    isWeb3Connected: false,
+    userContributions: JSON.parse(localStorage.getItem('ethercrowd_user_pledges')) || { 3: 2.0 }, // 默认记录在项目3出资过2 ETH
     campaigns: JSON.parse(localStorage.getItem('ethercrowd_campaigns')) || INITIAL_CAMPAIGNS,
     filter: "all"
 };
 
 function saveState() {
     localStorage.setItem('ethercrowd_campaigns', JSON.stringify(state.campaigns));
+    localStorage.setItem('ethercrowd_user_pledges', JSON.stringify(state.userContributions));
 }
 
 function updateWalletUI() {
     document.getElementById('wallet-addr').innerText = state.account;
     document.getElementById('wallet-bal').innerText = `${state.balance.toFixed(2)} ETH`;
+}
+
+function updateModeBanner() {
+    const banner = document.getElementById('mode-text');
+    if (banner) {
+        if (state.isWeb3Connected) {
+            banner.innerHTML = `<span style="color: #10b981;">● 真实 Web3 模式 (已连接 MetaMask: ${state.account})</span>`;
+        } else {
+            banner.innerHTML = `<span style="color: #f59e0b;">● 离线沙盒演示模式 (未连接真实 EVM 节点，状态变更仅保存在浏览器本地)</span>`;
+        }
+    }
 }
 
 function renderCampaigns() {
@@ -74,6 +87,7 @@ function renderCampaigns() {
         const percent = Math.min(100, Math.round((c.totalPledged / c.goal) * 100));
         const isEnded = c.status === "ended" || Date.now() > c.endAt;
         const isSuccess = c.totalPledged >= c.goal;
+        const myPledged = state.userContributions[c.id] || 0;
 
         const card = document.createElement('div');
         card.className = 'card';
@@ -81,8 +95,8 @@ function renderCampaigns() {
             <div>
                 <div class="card-header">
                     <h3 class="card-title">${c.title}</h3>
-                    <span class="badge-status ${isEnded ? 'status-ended' : 'status-active'}">
-                        ${isEnded ? (isSuccess ? '众筹达标' : '众筹结束') : '进行中'}
+                    <span class="badge-status ${isEnded ? (isSuccess ? 'status-active' : 'status-ended') : 'status-active'}">
+                        ${isEnded ? (isSuccess ? '众筹达标' : '众筹流标') : '进行中'}
                     </span>
                 </div>
                 <p class="card-desc">${c.description}</p>
@@ -94,13 +108,14 @@ function renderCampaigns() {
                         <span>已筹集: <strong>${c.totalPledged.toFixed(1)} ETH</strong> (${percent}%)</span>
                         <span>目标: ${c.goal.toFixed(1)} ETH</span>
                     </div>
+                    ${myPledged > 0 ? `<div style="font-size:0.8rem; color:#38bdf8; margin-top:0.3rem;">我的出资: ${myPledged.toFixed(1)} ETH</div>` : ''}
                 </div>
             </div>
             <div class="card-actions">
                 ${!isEnded ? `
                     <button class="btn btn-primary btn-sm" onclick="handlePledge(${c.id})"><i class="fas fa-hand-holding-usd"></i> 支持项目</button>
                 ` : (
-                    !isSuccess ? `<button class="btn btn-danger btn-sm" onclick="handleRefund(${c.id})"><i class="fas fa-undo"></i> 申请退款</button>` : ''
+                    !isSuccess ? `<button class="btn btn-danger btn-sm" onclick="handleRefund(${c.id})"><i class="fas fa-undo"></i> 申请全额退款</button>` : ''
                 )}
                 <button class="btn btn-outline btn-sm" onclick="openMilestones(${c.id})"><i class="fas fa-list-check"></i> 里程碑治理 (${c.milestones ? c.milestones.length : 0})</button>
             </div>
@@ -115,7 +130,7 @@ function renderCampaigns() {
 }
 
 window.handlePledge = function(id) {
-    const amtStr = prompt("请输入您希望支持的金额 (ETH):", "2.0");
+    const amtStr = prompt("请输入您希望出资的金额 (ETH):", "2.0");
     if (!amtStr) return;
     const amt = parseFloat(amtStr);
     if (isNaN(amt) || amt <= 0) {
@@ -131,19 +146,30 @@ window.handlePledge = function(id) {
     const c = state.campaigns.find(item => item.id === id);
     if (c) {
         c.totalPledged += amt;
+        state.userContributions[id] = (state.userContributions[id] || 0) + amt;
         saveState();
         updateWalletUI();
         renderCampaigns();
-        alert(`[交易成功已打包上链]\n成功向项目【${c.title}】出资 ${amt} ETH！\n获得相应智能合约里程碑投票权。`);
+        alert(`[离线沙盒演示]\n成功向项目【${c.title}】出资 ${amt} ETH！\n（注意：当前为前端离线沙盒模式，变更已写入浏览器本地存储，未发起真实区块链交易）`);
     }
 };
 
 window.handleRefund = function(id) {
     const c = state.campaigns.find(item => item.id === id);
     if (!c) return;
-    alert(`[智能合约自动清算]\n该项目未能在截止日前达到预定筹资门槛 (${c.goal} ETH)。\n您的出资款项已原路退回您的钱包地址！`);
-    state.balance += 2.0; // 模拟退款
+
+    const myPledged = state.userContributions[id] || 0;
+    if (myPledged <= 0) {
+        alert(`[退款拦截] 您在项目【${c.title}】中当前出资记录为 0 ETH，无款项可退。`);
+        return;
+    }
+
+    state.balance += myPledged;
+    state.userContributions[id] = 0;
+    saveState();
     updateWalletUI();
+    renderCampaigns();
+    alert(`[离线沙盒退款成功]\n项目【${c.title}】流标触发 All-or-Nothing 退款！\n您此前实际出资的 ${myPledged.toFixed(1)} ETH 已原路全额返还至您的沙盒钱包余额。`);
 };
 
 window.openMilestones = function(id) {
@@ -155,8 +181,8 @@ window.openMilestones = function(id) {
     let html = `
         <h4 style="margin-bottom: 0.8rem; color: #a5b4fc;">项目：${c.title}</h4>
         <p style="font-size: 0.85rem; color: #94a3b8; margin-bottom: 1.2rem;">
-            以太坊智能合约锁定资金池: <strong>${c.totalPledged.toFixed(1)} ETH</strong>。<br>
-            项目方提取款项必须提交具体里程碑用途，并获得出资人投票超过 50% 赞成后方可拨付。
+            锁定资金池: <strong>${c.totalPledged.toFixed(1)} ETH</strong>。<br>
+            规则：项目方提款必须提交里程碑用途，并获得出资人投票超过 50% 赞成后方可拨付。
         </p>
     `;
 
@@ -165,6 +191,7 @@ window.openMilestones = function(id) {
     } else {
         c.milestones.forEach(m => {
             const pass = m.votes * 2 > c.totalPledged;
+            const hasVoted = m.voters && m.voters.includes(state.account);
             html += `
                 <div style="background: rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.08); padding: 1rem; border-radius: 8px; margin-bottom: 0.8rem;">
                     <div style="display: flex; justify-content: space-between; margin-bottom: 0.4rem;">
@@ -176,7 +203,9 @@ window.openMilestones = function(id) {
                         · 状态: <span style="color: ${m.executed ? '#10b981' : (pass ? '#f59e0b' : '#94a3b8')}">${m.executed ? '已执行拨款' : (pass ? '票数达标待拨' : '投票进行中')}</span>
                     </div>
                     ${!m.executed ? `
-                        <button class="btn btn-primary btn-sm" onclick="voteMilestone(${c.id}, ${m.id})"><i class="fas fa-check"></i> 投赞成票</button>
+                        <button class="btn ${hasVoted ? 'btn-outline' : 'btn-primary'} btn-sm" onclick="voteMilestone(${c.id}, ${m.id})">
+                            <i class="fas fa-check"></i> ${hasVoted ? '已投赞成票' : '投赞成票'}
+                        </button>
                     ` : ''}
                 </div>
             `;
@@ -192,16 +221,26 @@ window.voteMilestone = function(cid, mid) {
     if (!c) return;
     const m = c.milestones.find(item => item.id === mid);
     if (!m) return;
-    m.votes += 2.0; // 模拟投赞成票
+
+    m.voters = m.voters || [];
+    if (m.voters.includes(state.account)) {
+        alert(`[安全拦截] 您（${state.account}）已对该里程碑投过票，智能合约已拦截重复投票！`);
+        return;
+    }
+
+    const voteWeight = state.userContributions[cid] || 2.0;
+    m.votes += voteWeight;
+    m.voters.push(state.account);
     saveState();
     openMilestones(cid);
     renderCampaigns();
-    alert(`[投票交易已上链] 您已对该里程碑投下赞成票！`);
+    alert(`[离线沙盒投票成功]\n已按您的出资权重 (${voteWeight.toFixed(1)} ETH) 计入赞成票！\n（注意：当前为前端离线演示）`);
 };
 
 // 交互绑定
 document.addEventListener('DOMContentLoaded', () => {
     updateWalletUI();
+    updateModeBanner();
     renderCampaigns();
 
     // 筛选标签切换
@@ -248,7 +287,7 @@ document.addEventListener('DOMContentLoaded', () => {
         saveState();
         renderCampaigns();
         launchModal.classList.remove('active');
-        alert(`[合约创建成功]\n新众筹项目【${title}】已成功部署至区块链！`);
+        alert(`[离线沙盒项目已创建]\n新众筹项目【${title}】已加入列表。\n（注意：当前为前端离线沙盒模式，未发起真实区块链交易）`);
     };
 
     // 连接 MetaMask
@@ -257,14 +296,16 @@ document.addEventListener('DOMContentLoaded', () => {
             try {
                 const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
                 state.account = accounts[0];
+                state.isWeb3Connected = true;
                 updateWalletUI();
-                alert(`MetaMask 钱包连接成功！\n地址: ${accounts[0]}`);
+                updateModeBanner();
+                alert(`MetaMask 钱包连接成功！\n当前连接地址: ${accounts[0]}\n提示: 真实链交易需要本地运行 Ganache 节点 (ChainId 1337) 并部署合约。`);
             } catch (err) {
                 console.error(err);
+                alert(`MetaMask 连接取消或发生错误: ${err.message}`);
             }
         } else {
-            alert(`当前环境未检测到 MetaMask 插件，已为您自动启用沙盒模拟钱包进行全功能体验。`);
+            alert(`未检测到 MetaMask 插件。当前保持【离线沙盒演示模式】，所有功能可在前端沙盒中安全体验。`);
         }
     };
 });
-

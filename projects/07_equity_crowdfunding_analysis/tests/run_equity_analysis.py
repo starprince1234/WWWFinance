@@ -47,11 +47,13 @@ def main():
     print(f"[*] 全样本模拟等额分散投资组合总回报倍数 (Portfolio Multiple) : {res['portfolio_multiple']}x")
     print(f"[*] 前 5% 头部明星项目 (Top 5% Deals) 创造的退出资金占比     : {res['power_law_top_5_share_pct']}%")
     print("\n[ 理论机理解析 ]")
-    print("实证印证了风险投资领域的'幂律法则'（Venture Capital Power Law）：")
-    print("虽然破产率超过 60%，但极少数头部超级明星企业（如 3% 的 IPO 项目）创造了全行业绝大多数的净收益。")
+    print("本模型模拟验证了风险投资领域的'幂律法则'（Venture Capital Power Law）：")
+    print("极少数头部超级明星企业（如 10.4% 的 IPO 项目）创造了全行业绝大多数的退出收益。")
 
     # 4. 领投人机制对比
-    print_header("阶段四：治理红利 —— '专业领投人 + 大众跟投人' 机制实证比对")
+    print_header("阶段四：治理红利 —— '专业领投人 + 大众跟投人' 机制参数化模拟比对")
+    print("【特别说明】：下述对比数据由生成模型中设定之领投人权重参数所推导，")
+    print("用以推演领投人监督效应的微观机制，并非真实市场中采集的一手因果结论。\n")
     lead_res = res["lead_investor_contrast"]
     w_lead = lead_res["with_lead_investor"]
     wo_lead = lead_res["without_lead_investor"]
@@ -65,8 +67,8 @@ def main():
     print(f"{'平均存续年限':<22} | {w_lead['avg_survival_years']} 年                  | {wo_lead['avg_survival_years']} 年                  | 存活周期显著延长")
 
     print_header("阶段五：中国股权众筹政策反思与投资人保护启示")
-    print("1. 【合格投资人门槛】：早期大众跟投人普遍缺乏对 60%+ 破产率的心理承受力，必须实施严格的投资者适当性管理。")
-    print("2. 【合伙企业 (SPV) 穿透】：我国《公司法》限制有限责任公司股东不超过 50 人，通过有限合伙 (LP) 归集小额投资人是必经路径。")
+    print("1. 【合格投资人门槛】：早期大众跟投人普遍缺乏对高破产率和长期流动性锁定的承受力，必须实施严格的合格投资者适当性管理。")
+    print("2. 【合伙企业 (SPV) 穿透】：我国《公司法》（2023年修订第四十二条/原第二十四条）限制有限责任公司股东不超过 50 人，通过有限合伙 (LP) 归集小额投资人需应对监管穿透核查。")
     print("3. 【信披与反稀释保护】：小额股东难以参与董事会，必须通过领投人监督及强制跟售权 (Tag-along Right) 保护散户权益。")
     print("=" * 80 + "\n")
 

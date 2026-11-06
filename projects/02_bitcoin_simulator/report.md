@@ -133,7 +133,21 @@ $$H(B) = \text{DoubleSHA256}(Version \parallel PrevHash \parallel MerkleRoot \pa
 
 ---
 
-## 四、 互联网金融前沿思考与启示
+## 四、 原指定项目（Arthur Gervais ns-3 Bitcoin-Simulator）与本模拟器的学术与工程对比
+
+本课题指定的参考项目是苏黎世联邦理工学院（ETH Zurich）Arthur Gervais 团队发表于安全顶级会议 ACM CCS 2016 的经典论文《On the Security and Performance of Proof of Work Blockchains》的配套开源项目 [arthurgervais/Bitcoin-Simulator](https://github.com/arthurgervais/Bitcoin-Simulator)。在此对二者进行严谨的学术与工程对比：
+
+| 维度 | Arthur Gervais et al. (ACM CCS 2016) 原版模拟器 | 本文实现的 Python 事件驱动状态机模拟器 |
+| :--- | :--- | :--- |
+| **底层核心架构** | 基于离散事件网络模拟器 **ns-3.25** 与 RapidJSON，C++11 编写 | 基于纯 **Python 3 原生标准库**，无任何外部库依赖 |
+| **网络层建模精度** | **数据包级（Packet-level）拟真**：精确仿真跨洲海底光缆传输时延、TCP 拥塞控制、丢包率与节点地理拓扑（基于 Coinscope 爬虫实测数据） | **应用层消息路由**：以内存对象传递模拟 P2P Gossip 协议广播，重点展示节点状态收敛而非底层物理信道衰减 |
+| **计算负载与抽象** | 为模拟上千节点全球网络，将加密计算抽象为哈希延时与区块大小元数据，不执行完整的椭圆曲线验签 | 真实执行 UTXO 拆分/合并、交易哈希计算与工作量证明 Nonce 试算，保留完整数据结构 |
+| **核心研究问题** | **网络层参数对共识安全的影响**：量化区块大小（Block Size）、出块间隔（Block Interval）与孤块率（Stale Block Rate）、分叉概率的函数关系 | **共识算法与状态机流转**：直观演示最长链选择法则、最近共同祖先（LCA）状态回滚、交易池双花拦截与 51% 私有链覆写 |
+| **环境与复现性** | 依赖 Python 2.7 与旧版 GCC 4.8/5.x，在现代 Apple Silicon ARM64 环境下原生构建受阻（已在 `docker/` 提供容器配置，标记为待宿主环境验证） | 即开即用，秒级执行，支持交互式与自动化断言验证 |
+
+---
+
+## 五、 互联网金融前沿思考与启示
 
 1. **确定性结算（Deterministic Finality） vs 概率性结算（Probabilistic Finality）**
    - 传统银行跨行清算系统（如我国央行大额实时支付系统 HVPS、美联储 Fedwire）采用法定中心化背书的“即时确定性清算”——一旦入账即不可撤销。
@@ -144,7 +158,7 @@ $$H(B) = \text{DoubleSHA256}(Version \parallel PrevHash \parallel MerkleRoot \pa
 
 ---
 
-## 五、 总结
+## 六、 总结
 
 本课题通过纯 Python 架构完整复现了比特币网络、UTXO 状态流转、默克尔树计算、动态挖矿与深度链重组机制，成功验证了中本聪最长链共识的自洽性与 51% 算力攻击的破坏性。本模拟器不仅是一套高可用性的区块链教学工具，也为深入探究去中心化金融清算架构提供了坚实的技术范本。
 

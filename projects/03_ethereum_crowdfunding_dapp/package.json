@@ -1,0 +1,21 @@
+{
+  "name": "03_ethereum_crowdfunding_dapp",
+  "version": "1.0.0",
+  "description": "> **对应 Gitee 课题**：`#IKSCC2` 以太坊的众筹DAPP   > **项目定位**：基于 Solidity 0.8.20 + Web3 前端构建的去中心化众筹应用，具备条件退款与里程碑 DAO 治理防卷款跑路机制   > **环境要求**：支持主流现代浏览器，内置 EVM 仿真测试套件 (零环境配置障碍)",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "ethers": "^6.17.0",
+    "ganache": "^7.9.2",
+    "solc": "^0.8.20"
+  }
+}

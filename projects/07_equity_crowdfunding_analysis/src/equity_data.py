@@ -58,7 +58,10 @@ def generate_equity_crowdfunding_data(n_samples: int = 500, seed: int = 42) -> s
         founder_exits = random.choices([0, 1, 2], weights=[0.70, 0.22, 0.08])[0]
 
         # 4. 初创企业生命周期模拟 (符合高死亡率与幂律回报)
-        # 领投人与创始人经验显著降低破产率、提升被并购或 IPO 概率
+        # 【重要学术诚信声明】：
+        # 下述生成式模型设定了领投人 (lead_investor) 与创始人背景 (founder_exits) 对 quality_score 的正向赋权。
+        # 此处输出的统计分布是生成规则在概率抽样下的代数必然结果，用于模拟演练量化回测流程，
+        # 绝不可被引申或宣称为“实证证明了现实世界中领投人能降低破产率”的真实因果结论！
         quality_score = 0.5 * lead_investor + 0.6 * founder_exits + (0.3 if sector in ["SaaS/AI", "BioMed/Healthcare"] else 0.0) + random.gauss(0, 0.8)
 
         # 退出分布: 破产清算 (~62%)、存续微利 (~26%)、并购退出 (~9%)、IPO成独角兽 (~3%)
